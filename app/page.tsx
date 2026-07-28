@@ -41,6 +41,7 @@ type UnitKey = keyof typeof units;
 export default function Home() {
   const [unit, setUnit] = useState<UnitKey>("84A");
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [showOffer, setShowOffer] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -85,6 +86,32 @@ export default function Home() {
 
   return (
     <main>
+      {showOffer && (
+        <div className="offer-popup-backdrop" role="presentation" onClick={() => setShowOffer(false)}>
+          <section
+            className="offer-popup"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="offer-popup-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button className="offer-popup-close" type="button" onClick={() => setShowOffer(false)} aria-label="혜택 안내 닫기">×</button>
+            <p className="offer-popup-kicker">SPECIAL CONTRACT BENEFIT</p>
+            <p className="offer-popup-lead">내 집 마련의 시작을 가볍게</p>
+            <h2 id="offer-popup-title">
+              계약금 <strong>500만원</strong>으로<br />
+              <em>입주 전까지 OK!</em>
+            </h2>
+            <div className="offer-popup-rule" />
+            <p className="offer-popup-copy">초기 자금 부담은 낮추고<br />브레인시티의 미래가치는 먼저 만나보세요.</p>
+            <div className="offer-popup-actions">
+              <a href="#contact" onClick={() => setShowOffer(false)}>혜택 상담 신청 <span>→</span></a>
+              <a href={PHONE_LINK}>전화로 바로 문의</a>
+            </div>
+            <p className="offer-popup-note">※ 적용 조건과 세부 내용은 타입 및 계약 시점에 따라 달라질 수 있으므로 상담을 통해 확인해 주세요.</p>
+          </section>
+        </div>
+      )}
       <header className="site-header">
         <a className="brand" href="#top" aria-label="메디스파크 홈">
           <span>브레인시티</span>
