@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
-      images: [`${SITE_URL}/og-medispark-hero.png`],
+      images: [`${SITE_URL}/og-medispark-v2.png`],
     },
   ];
 }

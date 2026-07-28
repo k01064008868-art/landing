@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
     : undefined,
   icons: {
-    icon: [{ url: "/favicon-hero.png", type: "image/png" }],
-    shortcut: "/favicon-hero.png",
-    apple: "/favicon-hero.png",
+    icon: [{ url: "/favicon-medispark-v2.png", type: "image/png" }],
+    shortcut: "/favicon-medispark-v2.png",
+    apple: "/favicon-medispark-v2.png",
   },
   openGraph: {
     type: "website",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
       "건강과 배움, 공원까지 가까운 새로운 중심. 총 1,215세대 분양 안내 및 상담 신청.",
     images: [
       {
-        url: "/og-medispark-hero.png",
+        url: "/og-medispark-v2.png",
         width: 2511,
         height: 1197,
         alt: "브레인시티 메디스파크 로제비앙 모아엘가 단지 조감도",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "브레인시티 메디스파크 로제비앙 모아엘가",
     description: "총 1,215세대 분양 안내 및 상담 신청",
-    images: ["/og-medispark-hero.png"],
+    images: ["/og-medispark-v2.png"],
   },
 };
 
