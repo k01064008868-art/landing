@@ -269,7 +269,6 @@ export default function Home() {
           <label className="check"><input type="checkbox" name="marketingConsent" /><span>[선택] 분양 소식 및 마케팅 정보 수신에 동의합니다.</span></label>
           <button className="submit" disabled={submitting}>{submitting ? "접수 중..." : "상담 신청하기"} <span>→</span></button>
           {message && <p className="form-message" role="status">{message}</p>}
-          <p className="manager-note">접수 담당자: 김상순</p>
         </form>
       </section>
 
@@ -281,7 +280,7 @@ export default function Home() {
 
       <footer>
         <div className="footer-brand"><span>브레인시티</span><strong>메디스파크</strong><p>로제비앙 모아엘가</p></div>
-        <div><p>분양 상담</p><a href={PHONE_LINK}>{PHONE_DISPLAY}</a><small>상담 담당자 김상순</small></div>
+        <div><p>분양 상담</p><a href={PHONE_LINK}>{PHONE_DISPLAY}</a></div>
         <div className="footer-info"><p>경기도 평택시 장안동 평택브레인시티 일반산업단지 6BL</p><p>본 페이지는 분양 안내를 위한 홍보 페이지입니다.</p><p>© 2026 MEDISPARK. ALL RIGHTS RESERVED.</p></div>
       </footer>
 
