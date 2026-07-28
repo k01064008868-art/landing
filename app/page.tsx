@@ -46,9 +46,10 @@ export default function Home() {
 
   async function submitLead(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setSubmitting(true);
     setMessage("");
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
     const payload = {
       name: String(form.get("name") || ""),
       phone: String(form.get("phone") || "").replace(/\D/g, ""),
@@ -74,7 +75,7 @@ export default function Home() {
         throw new Error(result.message || "Lead submission failed");
       }
       setMessage(`상담 신청이 완료되었습니다. 접수번호는 ${result.receiptId}입니다.`);
-      event.currentTarget.reset();
+      formElement.reset();
     } catch {
       setMessage(`접수가 완료되지 않았습니다. 다시 시도하거나 ${PHONE_DISPLAY}로 문의해 주세요.`);
     } finally {
