@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+const GOOGLE_SCRIPT_URL =
+  process.env.GOOGLE_SCRIPT_URL ||
+  "https://script.google.com/macros/s/AKfycbzcJBozhrhlT0L-3H9jItxVr35kqIusAywaP53e3WIMBcprksAGm2EzewYKbic1Ffk7/exec";
+
 type LeadPayload = {
   name?: string;
   phone?: string;
@@ -28,11 +32,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, code: "INVALID_INPUT", message: "입력 정보를 확인해 주세요." }, { status: 400 });
     }
 
-    const scriptUrl = process.env.GOOGLE_SCRIPT_URL;
-    if (!scriptUrl) {
-      return NextResponse.json({ ok: false, code: "NOT_CONFIGURED", message: "상담 접수 연결을 준비 중입니다." }, { status: 503 });
-    }
-
     const receiptId = `MSP-${Date.now()}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
     const lead = {
       receiptId,
@@ -56,10 +55,11 @@ export async function POST(request: Request) {
       status: "신규",
     };
 
-    const sheetResponse = await fetch(scriptUrl, {
+    const sheetResponse = await fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(lead),
+      redirect: "follow",
     });
     if (!sheetResponse.ok) throw new Error("Google Sheet write failed");
     const sheetResult = await sheetResponse.json().catch(() => ({ ok: true }));

@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 
 const PHONE_DISPLAY = "010-6689-2348";
 const PHONE_LINK = "tel:01066892348";
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcJBozhrhlT0L-3H9jItxVr35kqIusAywaP53e3WIMBcprksAGm2EzewYKbic1Ffk7/exec";
 
 const premiums = [
   { no: "01", label: "MEDICAL", title: "가까이에서 누리는 메디컬 비전", text: "아주대병원과 의료 R&D 복합타운 계획으로 완성되는 새로운 생활권" },
@@ -50,23 +49,9 @@ export default function Home() {
     setSubmitting(true);
     setMessage("");
     const form = new FormData(event.currentTarget);
-    const receiptId = `MSP-${Date.now()}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
     const payload = {
-      receiptId,
-      submittedAt: new Intl.DateTimeFormat("sv-SE", {
-        timeZone: "Asia/Seoul",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      }).format(new Date()),
       name: String(form.get("name") || ""),
       phone: String(form.get("phone") || "").replace(/\D/g, ""),
-      displayPhone: String(form.get("phone") || ""),
-      managerName: "김상순",
       interestType: String(form.get("interestType") || "미정"),
       preferredTime: String(form.get("preferredTime") || ""),
       privacyConsent: form.get("privacyConsent") === "on",
@@ -76,17 +61,19 @@ export default function Home() {
       utmCampaign: new URLSearchParams(location.search).get("utm_campaign") || "",
       referrer: document.referrer,
       pageUrl: location.href,
-      status: "신규",
     };
 
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
+      const response = await fetch("/api/lead", {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      setMessage(`상담 신청이 완료되었습니다. 접수번호는 ${receiptId}입니다.`);
+      const result = await response.json();
+      if (!response.ok || result.ok !== true) {
+        throw new Error(result.message || "Lead submission failed");
+      }
+      setMessage(`상담 신청이 완료되었습니다. 접수번호는 ${result.receiptId}입니다.`);
       event.currentTarget.reset();
     } catch {
       setMessage(`접수가 완료되지 않았습니다. 다시 시도하거나 ${PHONE_DISPLAY}로 문의해 주세요.`);
