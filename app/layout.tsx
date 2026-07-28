@@ -3,9 +3,36 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://landing-rho-eight-55.vercel.app"),
-  title: "브레인시티 메디스파크 로제비앙 모아엘가 | 분양 안내",
+  title: {
+    default: "브레인시티 메디스파크 로제비앙 모아엘가 | 분양 안내",
+    template: "%s | 브레인시티 메디스파크",
+  },
   description:
     "평택 브레인시티 6BL 총 1,215세대. 입지환경, 단지배치, 84A·84B·101㎡ 평면과 분양 상담을 확인하세요.",
+  keywords: [
+    "브레인시티 메디스파크",
+    "평택 브레인시티 아파트",
+    "로제비앙 모아엘가",
+    "평택 아파트 분양",
+    "브레인시티 6BL",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   icons: {
     icon: [{ url: "/favicon-hero.png", type: "image/png" }],
     shortcut: "/favicon-hero.png",
